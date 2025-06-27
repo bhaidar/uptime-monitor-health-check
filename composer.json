@@ -1,17 +1,17 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "bhaidar/uptime-monitor-health-check",
+    "description": "This is my package uptime-monitor-health-check",
     "keywords": [
-        ":vendor_name",
+        "Bilal Haidar",
         "laravel",
-        ":package_slug"
+        "uptime-monitor-health-check"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/bhaidar/uptime-monitor-health-check",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Bilal Haidar",
+            "email": "bhaidar@gmail.com",
             "role": "Developer"
         }
     ],
@@ -21,9 +21,9 @@
         "illuminate/contracts": "^10.0||^11.0||^12.0"
     },
     "require-dev": {
+        "larastan/larastan": "^2.9||^3.0",
         "laravel/pint": "^1.14",
         "nunomaduro/collision": "^8.1.1||^7.10.0",
-        "larastan/larastan": "^2.9||^3.0",
         "orchestra/testbench": "^10.0.0||^9.0.0||^8.22.0",
         "pestphp/pest": "^3.0",
         "pestphp/pest-plugin-arch": "^3.0",
@@ -31,17 +31,19 @@
         "phpstan/extension-installer": "^1.3||^2.0",
         "phpstan/phpstan-deprecation-rules": "^1.1||^2.0",
         "phpstan/phpstan-phpunit": "^1.3||^2.0",
-        "spatie/laravel-ray": "^1.35"
+        "spatie/laravel-health": "^1.34",
+        "spatie/laravel-ray": "^1.35",
+        "spatie/laravel-uptime-monitor": "^4.5"
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "BilalHaidar\\UptimeMonitorHealthCheck\\": "src/",
+            "BilalHaidar\\UptimeMonitorHealthCheck\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/",
+            "w\\UptimeMonitorHealthCheck\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -60,16 +62,7 @@
             "phpstan/extension-installer": true
         }
     },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
-            ],
-            "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
-            }
-        }
-    },
+    "extra": {},
     "minimum-stability": "dev",
     "prefer-stable": true
 }
