@@ -12,18 +12,16 @@ class UptimeMonitorCheck extends Check
 
     /**
      * Static make() method for fluent configuration.
-     *
-     * @return static
      */
     public static function make(): static
     {
-        return new static();
+        return new static;
     }
 
     /**
      * Specify a monitor by its URL or name to check only that specific monitor.
      *
-     * @param string $url The URL or name of the specific monitor to check.
+     * @param  string  $url  The URL or name of the specific monitor to check.
      * @return $this
      */
     public function monitor(string $url): self
@@ -53,7 +51,7 @@ class UptimeMonitorCheck extends Check
     /**
      * Check a specific monitor identified by its URL or name.
      *
-     * @param Result $result The initial Result object.
+     * @param  Result  $result  The initial Result object.
      * @return Result The updated Result object indicating the status of the specific monitor.
      */
     protected function checkSpecificMonitor(Result $result): Result
@@ -65,7 +63,7 @@ class UptimeMonitorCheck extends Check
             ->first();
 
         // If the monitor is not found, return a failed result
-        if (!$monitor) {
+        if (! $monitor) {
             return $result
                 ->failed("Monitor '{$this->specificMonitorUrl}' not found.")
                 ->shortSummary("Monitor '{$this->specificMonitorUrl}' not found")
@@ -129,7 +127,7 @@ class UptimeMonitorCheck extends Check
     /**
      * Check the health of all configured monitors.
      *
-     * @param Result $result The initial Result object.
+     * @param  Result  $result  The initial Result object.
      * @return Result The updated Result object indicating the aggregated status of all monitors.
      */
     protected function checkAllMonitors(Result $result): Result
@@ -178,9 +176,9 @@ class UptimeMonitorCheck extends Check
         ];
 
         // If there are any down or failed monitors, return a failed result
-        if (!empty($downMonitors) || !empty($failedMonitors)) {
+        if (! empty($downMonitors) || ! empty($failedMonitors)) {
             $problematic = array_merge($downMonitors, $failedMonitors);
-            $message = 'The following monitors are down or failed: ' . implode(', ', $problematic);
+            $message = 'The following monitors are down or failed: '.implode(', ', $problematic);
             $shortSummary = sprintf('%d down/failed, %d up', count($problematic), count($upMonitors));
 
             return $result
@@ -190,8 +188,8 @@ class UptimeMonitorCheck extends Check
         }
 
         // If there are monitors that have not been checked yet, return a warning result
-        if (!empty($notCheckedMonitors)) {
-            $message = 'The following monitors have not been checked yet: ' . implode(', ', $notCheckedMonitors);
+        if (! empty($notCheckedMonitors)) {
+            $message = 'The following monitors have not been checked yet: '.implode(', ', $notCheckedMonitors);
             $shortSummary = sprintf('%d not checked, %d up', count($notCheckedMonitors), count($upMonitors));
 
             return $result
@@ -202,6 +200,7 @@ class UptimeMonitorCheck extends Check
 
         // If all monitors are up and healthy, return an OK result
         $shortSummary = sprintf('All %d monitors up', $totalMonitors);
+
         return $result
             ->ok('All uptime monitors are up and healthy.')
             ->shortSummary($shortSummary)

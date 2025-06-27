@@ -1,8 +1,8 @@
 <?php
 
 use BilalHaidar\UptimeMonitorHealthCheck\UptimeMonitorCheck;
-use Spatie\UptimeMonitor\Models\Monitor;
-use Spatie\Health\Enums\Status; // Import the Status enum
+use Spatie\Health\Enums\Status;
+use Spatie\UptimeMonitor\Models\Monitor; // Import the Status enum
 
 beforeEach(function () {
     // Clear mocks before each test to ensure a clean state
@@ -11,11 +11,11 @@ beforeEach(function () {
 
 test('it succeeds when no monitors are configured', function () {
     // Mock the Monitor::all() method to return an empty collection
-    Mockery::mock('alias:' . Monitor::class)
+    Mockery::mock('alias:'.Monitor::class)
         ->shouldReceive('all')
         ->andReturn(collect([]));
 
-    $check = new UptimeMonitorCheck();
+    $check = new UptimeMonitorCheck;
     $result = $check->run();
 
     // Assert that the result status is OK
@@ -31,7 +31,7 @@ test('it succeeds when no monitors are configured', function () {
 
 test('it succeeds when all monitors are up', function () {
     // Create mock monitor objects for "up" status
-    $monitor1 = (object)[
+    $monitor1 = (object) [
         'url' => 'https://monitor1.com',
         'name' => 'Monitor One', // Added name for comprehensive meta data
         'status' => 'up',
@@ -40,7 +40,7 @@ test('it succeeds when all monitors are up', function () {
         'isNotYetChecked' => false,
         'last_check_status' => 'succeeded', // Added for meta data
     ];
-    $monitor2 = (object)[
+    $monitor2 = (object) [
         'url' => 'https://monitor2.com',
         'name' => 'Monitor Two', // Added name for comprehensive meta data
         'status' => 'up',
@@ -51,11 +51,11 @@ test('it succeeds when all monitors are up', function () {
     ];
 
     // Mock Monitor::all() to return a collection of "up" monitors
-    Mockery::mock('alias:' . Monitor::class)
+    Mockery::mock('alias:'.Monitor::class)
         ->shouldReceive('all')
         ->andReturn(collect([$monitor1, $monitor2]));
 
-    $check = new UptimeMonitorCheck();
+    $check = new UptimeMonitorCheck;
     $result = $check->run();
 
     // Assert that the result status is OK
@@ -78,7 +78,7 @@ test('it succeeds when all monitors are up', function () {
 
 test('it warns when some monitors have not been checked yet', function () {
     // Create mock monitor objects with one "not yet checked"
-    $monitor1 = (object)[
+    $monitor1 = (object) [
         'url' => 'https://monitor1.com',
         'name' => 'Monitor One',
         'status' => 'up',
@@ -87,7 +87,7 @@ test('it warns when some monitors have not been checked yet', function () {
         'isNotYetChecked' => false,
         'last_check_status' => 'succeeded',
     ];
-    $monitor2 = (object)[
+    $monitor2 = (object) [
         'url' => 'https://monitor2.com',
         'name' => 'Monitor Two',
         'status' => 'not yet checked',
@@ -98,11 +98,11 @@ test('it warns when some monitors have not been checked yet', function () {
     ];
 
     // Mock Monitor::all() to return the mixed collection
-    Mockery::mock('alias:' . Monitor::class)
+    Mockery::mock('alias:'.Monitor::class)
         ->shouldReceive('all')
         ->andReturn(collect([$monitor1, $monitor2]));
 
-    $check = new UptimeMonitorCheck();
+    $check = new UptimeMonitorCheck;
     $result = $check->run();
 
     // Assert that the result status is Warning
@@ -125,7 +125,7 @@ test('it warns when some monitors have not been checked yet', function () {
 
 test('it fails when some monitors are down', function () {
     // Create mock monitor objects with one "down" monitor
-    $monitor1 = (object)[
+    $monitor1 = (object) [
         'url' => 'https://monitor1.com',
         'name' => 'Monitor One',
         'status' => 'up',
@@ -134,7 +134,7 @@ test('it fails when some monitors are down', function () {
         'isNotYetChecked' => false,
         'last_check_status' => 'succeeded',
     ];
-    $monitor2 = (object)[
+    $monitor2 = (object) [
         'url' => 'https://monitor2.com',
         'name' => 'Monitor Two',
         'status' => 'down',
@@ -146,11 +146,11 @@ test('it fails when some monitors are down', function () {
     ];
 
     // Mock Monitor::all() to return the mixed collection
-    Mockery::mock('alias:' . Monitor::class)
+    Mockery::mock('alias:'.Monitor::class)
         ->shouldReceive('all')
         ->andReturn(collect([$monitor1, $monitor2]));
 
-    $check = new UptimeMonitorCheck();
+    $check = new UptimeMonitorCheck;
     $result = $check->run();
 
     // Assert that the result status is Failed
@@ -173,7 +173,7 @@ test('it fails when some monitors are down', function () {
 
 test('it fails when some monitors have failed status', function () {
     // Create mock monitor objects with one "failed" monitor
-    $monitor1 = (object)[
+    $monitor1 = (object) [
         'url' => 'https://monitor1.com',
         'name' => 'Monitor One',
         'status' => 'up',
@@ -182,7 +182,7 @@ test('it fails when some monitors have failed status', function () {
         'isNotYetChecked' => false,
         'last_check_status' => 'succeeded',
     ];
-    $monitor2 = (object)[
+    $monitor2 = (object) [
         'url' => 'https://monitor2.com',
         'name' => 'Monitor Two',
         'status' => 'failed',
@@ -194,11 +194,11 @@ test('it fails when some monitors have failed status', function () {
     ];
 
     // Mock Monitor::all() to return the mixed collection
-    Mockery::mock('alias:' . Monitor::class)
+    Mockery::mock('alias:'.Monitor::class)
         ->shouldReceive('all')
         ->andReturn(collect([$monitor1, $monitor2]));
 
-    $check = new UptimeMonitorCheck();
+    $check = new UptimeMonitorCheck;
     $result = $check->run();
 
     // Assert that the result status is Failed
@@ -221,7 +221,7 @@ test('it fails when some monitors have failed status', function () {
 
 test('it can check a specific monitor by url and it is up', function () {
     // Create a mock monitor object for a specific "up" monitor
-    $monitor = (object)[
+    $monitor = (object) [
         'url' => 'https://specific.com/monitor',
         'name' => 'Specific Monitor',
         'status' => 'up',
@@ -233,7 +233,7 @@ test('it can check a specific monitor by url and it is up', function () {
     ];
 
     // Mock the query builder methods for finding a specific monitor
-    Mockery::mock('alias:' . Monitor::class)
+    Mockery::mock('alias:'.Monitor::class)
         ->shouldReceive('query')->andReturnSelf()
         ->shouldReceive('where')->with('url', 'https://specific.com/monitor')->andReturnSelf()
         ->shouldReceive('orWhere')->with('name', 'https://specific.com/monitor')->andReturnSelf()
@@ -257,7 +257,7 @@ test('it can check a specific monitor by url and it is up', function () {
 
 test('it can check a specific monitor by url and it is down', function () {
     // Create a mock monitor object for a specific "down" monitor
-    $monitor = (object)[
+    $monitor = (object) [
         'url' => 'https://specific.com/down',
         'name' => 'Specific Down Monitor',
         'status' => 'down',
@@ -269,7 +269,7 @@ test('it can check a specific monitor by url and it is down', function () {
     ];
 
     // Mock the query builder methods for finding a specific monitor
-    Mockery::mock('alias:' . Monitor::class)
+    Mockery::mock('alias:'.Monitor::class)
         ->shouldReceive('query')->andReturnSelf()
         ->shouldReceive('where')->andReturnSelf()
         ->shouldReceive('orWhere')->andReturnSelf()
@@ -294,7 +294,7 @@ test('it can check a specific monitor by url and it is down', function () {
 
 test('it fails when specific monitor is not found', function () {
     // Mock the query builder methods for a non-existent monitor
-    Mockery::mock('alias:' . Monitor::class)
+    Mockery::mock('alias:'.Monitor::class)
         ->shouldReceive('query')->andReturnSelf()
         ->shouldReceive('where')->andReturnSelf()
         ->shouldReceive('orWhere')->andReturnSelf()
@@ -316,7 +316,7 @@ test('it fails when specific monitor is not found', function () {
 
 test('it fails when a monitor is down and not yet checked mix', function () {
     // Create mock monitor objects with a mix of statuses
-    $monitor1 = (object)[
+    $monitor1 = (object) [
         'url' => 'https://monitor1.com',
         'name' => 'Monitor One',
         'status' => 'down',
@@ -326,7 +326,7 @@ test('it fails when a monitor is down and not yet checked mix', function () {
         'last_check_status' => 'failed',
         'latest_check_failure_message' => 'Host unreachable',
     ];
-    $monitor2 = (object)[
+    $monitor2 = (object) [
         'url' => 'https://monitor2.com',
         'name' => 'Monitor Two',
         'status' => 'not yet checked',
@@ -335,7 +335,7 @@ test('it fails when a monitor is down and not yet checked mix', function () {
         'isNotYetChecked' => true,
         'last_check_status' => null,
     ];
-    $monitor3 = (object)[
+    $monitor3 = (object) [
         'url' => 'https://monitor3.com',
         'name' => 'Monitor Three',
         'status' => 'up',
@@ -346,11 +346,11 @@ test('it fails when a monitor is down and not yet checked mix', function () {
     ];
 
     // Mock Monitor::all() to return the mixed collection
-    Mockery::mock('alias:' . Monitor::class)
+    Mockery::mock('alias:'.Monitor::class)
         ->shouldReceive('all')
         ->andReturn(collect([$monitor1, $monitor2, $monitor3]));
 
-    $check = new UptimeMonitorCheck();
+    $check = new UptimeMonitorCheck;
     $result = $check->run();
 
     // Assert that the result status is Failed
